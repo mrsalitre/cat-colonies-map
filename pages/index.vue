@@ -26,7 +26,18 @@
 </template>
 
 <script>
-export default {}
+export default {
+  mounted() {
+    this.$gun
+      .get('cat-colonies')
+      .map()
+      .on((node, key) => {
+        // add results straight to the Vue component state
+        // and get updates when nodes are updated by GUN
+        this.vueState[key] = node
+      })
+  },
+}
 </script>
 
 <style>
