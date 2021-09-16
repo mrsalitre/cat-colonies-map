@@ -13,8 +13,8 @@
   "dependencies": {
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.8.3",
+    "gun": "^0.2020.1235",
     "nuxt": "^2.14.12",
-    "vue-gun": "0.0.3",
     "vue-image-upload-resize": "^2.3.0"
   },
   "devDependencies": {

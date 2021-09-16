@@ -14,10 +14,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '~/plugins/vue-gun.client.js',
-    '~/plugins/image-uploader.client.js',
-  ],
+  plugins: ['~/plugins/gun.client.js', '~/plugins/image-uploader.client.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
