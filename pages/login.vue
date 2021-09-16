@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input v-model="user.name" type="email" />
+    <input v-model="user.alias" type="email" />
     <input v-model="user.password" type="password" />
     <button @click="authUser()">Iniciar sesión</button>
     <button @click="createNewUser()">Registrarse</button>
@@ -12,15 +12,17 @@ export default {
   data() {
     return {
       user: {
-        name: null,
-        password: null,
+        alias: '',
+        password: '',
       },
     }
   },
   methods: {
     createNewUser() {
       const alias = this.user.alias
-      const pass = this.user.password
+      let pass = this.user.password
+      const trick = Date.now()
+      pass = `${pass}_${trick}`
       console.log(pass.length)
       this.$gun.get(`~${alias}`).once((user) => {
         if (!user) {
