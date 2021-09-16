@@ -4,7 +4,7 @@
       <li v-for="(colony, key) in colonies" :key="key">
         <img :src="colony.img" :alt="`imagen de ${colony.name}`" />
         <nuxt-link :to="`/check-colony/${key}`">comprobar colonia</nuxt-link>
-        <nuxt-link :to="`/colonia-de-gatos/${key}`">ver fotos</nuxt-link>
+        <nuxt-link :to="`/colony-gallery/${key}`">ver fotos</nuxt-link>
       </li>
     </ul>
   </div>
