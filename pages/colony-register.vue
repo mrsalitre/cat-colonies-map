@@ -17,24 +17,11 @@
     <input
       ref="fileUpload"
       style="display: none"
-      class="cursor-pointer absolute block opacity-0 pin-r pin-t"
       type="file"
       @change="processFile($event)"
     />
-    <img
-      :src="newColony.img"
-      class="
-        inline-block
-        object-cover
-        w-16
-        h-16
-        md:w-32 md:h-32
-        rounded-full
-        shadow
-      "
-    />
-    <br />
-    <button v-show="!loadingImg" class="underline" @click.prevent="pickFile()">
+    <img :src="newColony.img" />
+    <button v-show="!loadingImg" @click.prevent="pickFile()">
       {{ newColony.img ? 'cambiar foto' : 'hacer foto' }}
     </button>
     <p v-show="loadingImg">...cargando</p>
