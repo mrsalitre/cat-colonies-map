@@ -17,11 +17,14 @@ export default {
       },
     }
   },
+  async mounted() {
+    await this.$gun.user().recall({ sessionStorage: true })
+  },
   methods: {
-    createNewUser() {
+    async createNewUser() {
       const alias = this.user.alias
       const pass = this.user.password
-      this.$gun.get(`~@${alias}`).once((user) => {
+      await this.$gun.get(`~@${alias}`).once((user) => {
         if (!user) {
           this.$gun.user().create(
             alias,
@@ -38,10 +41,10 @@ export default {
         }
       })
     },
-    authUser() {
+    async authUser() {
       const alias = this.user.alias
       const pass = this.user.password
-      this.$gun.user().auth(alias, pass, () => {
+      await this.$gun.user().auth(alias, pass, () => {
         console.log('usuario iniciado')
       })
     },
