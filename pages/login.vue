@@ -20,17 +20,14 @@ export default {
   methods: {
     createNewUser() {
       const alias = this.user.alias
-      let pass = this.user.password
-      const trick = Date.now()
-      pass = `${pass}_${trick}`
-      console.log(pass.length)
-      this.$gun.get(`~${alias}`).once((user) => {
+      const pass = this.user.password
+      this.$gun.get(`~@${alias}`).once((user) => {
         if (!user) {
           this.$gun.user().create(
             alias,
             pass,
             (ack) => {
-              if (ack.ok) {
+              if (ack.ok === 0) {
                 console.log('usuario creado')
               } else {
                 console.log(ack.err)
@@ -45,7 +42,7 @@ export default {
       const alias = this.user.alias
       const pass = this.user.password
       this.$gun.user().auth(alias, pass, () => {
-        console.log('usuario inicado')
+        console.log('usuario iniciado')
       })
     },
     checkUser() {
