@@ -1,5 +1,6 @@
 <template>
   <div>
+    <LogOut />
     <ul>
       <li v-for="(colony, key) in colonies" :key="key">
         <img :src="colony.img" :alt="`imagen de ${colony.name}`" />
@@ -18,6 +19,16 @@ export default {
     }
   },
   mounted() {
+    if (this.$gun.user().is) {
+      this.$gun.user().recall({ sessionStorage: true })
+      console.log('iniciado')
+    } else {
+      console.log('no iniciado')
+    }
+    // const user = this.$gun.user()
+    // this.$gun.on('auth', async (ack) => {
+    //   console.log(await user.get('alias'))
+    // })
     this.$gun
       .get('cat-colonies')
       .map()

@@ -1,15 +1,15 @@
 <template>
   <div class="flex flex-wrap max-h-screen content-center justify-center">
     <div class="w-auto md:w-1/3 p-2 shadow bg-white">
-      <form class="w-full" @submit.prevent="signUp">
+      <form class="w-full" @submit.prevent="signIn">
         <h3 class="font-bold mb-4 lg:text-center boicotea-gradient text-4xl">
-          ¡Únete la colonia!
+          Iniciar sesion
         </h3>
         <div class="flex flex-wrap -mx-3">
           <div class="w-full px-3">
-            <label for="username" class="invisible">Nombre de usuario</label>
+            <label for="loginEmail" class="invisible">Nombre de usuario</label>
             <input
-              id="username"
+              id="loginEmail"
               v-model.trim="username"
               type="text"
               required
@@ -26,7 +26,7 @@
                 mb-3
                 lg:text-center
               "
-              placeholder="Nombre de usuario"
+              placeholder="Correo electronico"
             />
             <p
               v-if="errors.username.length"
@@ -74,7 +74,7 @@
         <div class="w-full text-center mt-2">
           <button
             type="submit"
-            :disabled="creatingAccount"
+            :disabled="authenticating"
             class="
               w-full
               lg:w-auto
@@ -88,13 +88,13 @@
               hover:to-purple-600 hover:from-blue-500
             "
           >
-            {{ !creatingAccount ? 'Crear cuenta' : 'Creando...' }}
+            {{ !authenticating ? 'Entrar' : 'Entrando...' }}
           </button>
-          <p class="pt-2 text-gray-700">¿Ya tienes una cuenta?</p>
+          <p class="pt-2 text-gray-700">¿No tienes una cuenta?</p>
           <nuxt-link
-            to="/signin"
+            to="/signup"
             class="text-gray-600 hover:text-gray-900 underline pb-2"
-            >Iniciar sesion</nuxt-link
+            >Registrarse</nuxt-link
           >
         </div>
       </form>
@@ -106,9 +106,9 @@ export default {
   name: 'SignUp',
   data() {
     return {
-      password: null,
       username: null,
-      creatingAccount: false,
+      password: null,
+      authenticating: false,
       errors: {
         username: [],
         password: [],
@@ -121,25 +121,13 @@ export default {
     },
   },
   methods: {
-    checkUsername(username) {
+    authenticateUser() {
       return new Promise((resolve, reject) => {
-        const lowkeyUsername = username.toLowerCase()
-        this.$gun.get(`~@${lowkeyUsername}`).once((user) => {
-          if (!user) {
-            resolve({ available: true })
-          } else {
-            resolve({ available: false })
-          }
-        })
-      })
-    },
-    createUser() {
-      return new Promise((resolve, reject) => {
-        this.$gun.user().create(
+        this.$gun.user().auth(
           this.username,
           this.password,
           (ack) => {
-            if (ack.ok === 0) {
+            if (ack.ack === 2) {
               resolve({ error: false })
             } else {
               resolve({ error: ack.err })
@@ -149,45 +137,40 @@ export default {
         )
       })
     },
-    async signUp() {
-      this.creatingAccount = true
+    async signIn() {
       try {
-        const validated = await this.validateForm()
-        if (validated) {
-          const response = await this.createUser()
-          if (!response.error) {
-            this.$router.push('/')
-          } else if (response.error === 'User already created!') {
-            this.errors.username.push('Este usuario ya ha sido creado')
-          } else if (response.error === 'Password too short!') {
-            this.errors.password.push(
-              'La contraseña debe tener al menos 8 caracteres, solo numeros y letras'
-            )
-          }
-          this.creatingAccount = false
-        } else {
-          this.creatingAccount = false
+        this.authenticating = true
+        await this.validateForm()
+        const response = await this.authenticateUser()
+        if (!response.error) {
+          await this.$gun.user().recall({ sessionStorage: true })
+          this.$router.push('/')
+        } else if (response.error === 'Wrong user or password.') {
+          this.errors.password.push('La contraseña no es correcta')
+          this.errors.username.push('El usuario no es correcto')
         }
+        this.authenticating = false
       } catch (e) {
-        this.creatingAccount = false
+        this.handleError(e)
+        this.authenticating = false
       }
     },
-    async validateForm() {
+    handleError(error) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    },
+    validateForm() {
       this.errors.username = []
       this.errors.password = []
       const usernamePttr = /^[a-zA-Z0-9._]+$/
       const username = this.username.trim().toLowerCase()
       const password = this.password
-      const validUsername = await this.checkUsername(username)
       if (!username) {
         this.errors.username.push('Por favor, escriba un nombre de usuario.')
       } else if (!usernamePttr.test(username)) {
         this.errors.username.push(
           'Por favor escriba un nombre de usuario válido'
         )
-      }
-      if (!validUsername.available) {
-        this.errors.username.push('El nombre de usuario ya existe')
       }
       if (!password) {
         this.errors.password.push('Por favor introduzca una contraseña')
