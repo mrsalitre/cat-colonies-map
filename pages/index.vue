@@ -1,6 +1,7 @@
 <template>
   <div>
     <LogOut />
+    <nuxt-link to="/colony-register">registrar colonia</nuxt-link>
     <ul>
       <li v-for="(colony, key) in colonies" :key="key">
         <img :src="colony.img" :alt="`imagen de ${colony.name}`" />
@@ -18,9 +19,10 @@ export default {
       colonies: {},
     }
   },
-  mounted() {
+  async mounted() {
     const user = this.$gun.user()
     if (user.is) {
+      await user.recall({ sessionStorage: true })
       console.log(user.is.pub)
     } else {
       console.log('no iniciado')

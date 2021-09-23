@@ -52,6 +52,16 @@ export default {
       colonies: {},
     }
   },
+  async mounted() {
+    const user = this.$gun.user()
+    if (user.is) {
+      await user.recall({ sessionStorage: true })
+      console.log(user.is.pub)
+    } else {
+      console.log('no iniciado')
+      this.$router.push('/signin')
+    }
+  },
   methods: {
     setImage(img) {
       this.newColony.img = img
