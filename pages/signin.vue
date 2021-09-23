@@ -143,7 +143,8 @@ export default {
         await this.validateForm()
         const response = await this.authenticateUser()
         if (!response.error) {
-          await this.$gun.user().recall({ sessionStorage: true })
+          const user = this.$gun.user()
+          await user.recall({ sessionStorage: true })
           this.$router.push('/')
         } else if (response.error === 'Wrong user or password.') {
           this.errors.password.push('La contraseña no es correcta')

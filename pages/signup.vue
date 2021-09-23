@@ -156,6 +156,8 @@ export default {
         if (validated) {
           const response = await this.createUser()
           if (!response.error) {
+            const user = this.$gun.user()
+            await user.recall({ sessionStorage: true })
             this.$router.push('/')
           } else if (response.error === 'User already created!') {
             this.errors.username.push('Este usuario ya ha sido creado')

@@ -19,16 +19,12 @@ export default {
     }
   },
   mounted() {
-    if (this.$gun.user().is) {
-      this.$gun.user().recall({ sessionStorage: true })
-      console.log('iniciado')
+    const user = this.$gun.user()
+    if (user.is) {
+      console.log(user.is.pub)
     } else {
       console.log('no iniciado')
     }
-    // const user = this.$gun.user()
-    // this.$gun.on('auth', async (ack) => {
-    //   console.log(await user.get('alias'))
-    // })
     this.$gun
       .get('cat-colonies')
       .map()

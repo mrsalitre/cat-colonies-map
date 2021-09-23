@@ -12,11 +12,11 @@ export default {
     }
   },
   mounted() {
-    if (this.$gun.user().is) {
+    const user = this.$gun.user()
+    if (user.is) {
+      console.log(user.is.pub)
       this.isLogged = true
-      console.log('iniciado')
     } else {
-      console.log('no iniciado')
       this.isLogged = false
     }
   },
