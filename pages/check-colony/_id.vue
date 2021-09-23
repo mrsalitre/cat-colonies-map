@@ -76,6 +76,7 @@ export default {
         takenByPub,
       })
       this.$gun.get(route).get('gallery').set(newColonyImg)
+      this.$gun.user().get('checked-colonies').set(newColonyImg)
       this.addingColonyImg = false
     },
   },

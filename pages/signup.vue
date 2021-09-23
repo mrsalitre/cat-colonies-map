@@ -156,9 +156,9 @@ export default {
         if (validated) {
           const response = await this.createUser()
           if (!response.error) {
-            const user = this.$gun.user()
-            await user.recall({ sessionStorage: true })
-            this.$router.push('/')
+            // const user = this.$gun.user()
+            // await user.recall({ sessionStorage: true })
+            this.$router.push('/signin')
           } else if (response.error === 'User already created!') {
             this.errors.username.push('Este usuario ya ha sido creado')
           } else if (response.error === 'Password too short!') {

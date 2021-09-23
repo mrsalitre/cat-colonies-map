@@ -116,6 +116,7 @@ export default {
         },
       })
       this.$gun.get('cat-colonies').set(newColony)
+      this.$gun.user().get('registered-colonies').set(newColony)
       this.addingColony = false
     },
   },
