@@ -40,6 +40,7 @@ export default {
   name: 'RegsterColony',
   data() {
     return {
+      user: null,
       colonyImg: undefined,
       loadingImg: false,
       gettingLocation: false,
@@ -57,6 +58,7 @@ export default {
     if (user.is) {
       await user.recall({ sessionStorage: true })
       console.log(user.is.pub)
+      this.user = user.is
     } else {
       console.log('no iniciado')
       this.$router.push('/signin')
@@ -100,10 +102,14 @@ export default {
       const colonyName = this.newColony.name
       const aproxPopulation = this.newColony.aproxPopulation
       const img = this.newColony.img
+      const createdByAlias = this.user.alias
+      const createdByPub = this.user.pub
       const newColony = this.$gun.get(colonyName).put({
         name: colonyName,
         'aprox-population': aproxPopulation,
         img,
+        createdByAlias,
+        createdByPub,
         location: {
           lat,
           long,

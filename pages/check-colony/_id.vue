@@ -37,6 +37,7 @@ export default {
   name: 'RegsterColony',
   data() {
     return {
+      user: null,
       colonyImg: undefined,
       loadingImg: false,
       addingColonyImg: false,
@@ -47,6 +48,7 @@ export default {
     if (user.is) {
       await user.recall({ sessionStorage: true })
       console.log(user.is.pub)
+      this.user = user.is
     } else {
       console.log('no iniciado')
       this.$router.push('/signin')
@@ -66,8 +68,12 @@ export default {
       this.addingColonyImg = true
       const route = this.$route.params.id
       const img = this.colonyImg
+      const takenByAlias = this.user.alias
+      const takenByPub = this.user.pub
       const newColonyImg = this.$gun.get(`${route}-images`).set({
         img,
+        takenByAlias,
+        takenByPub,
       })
       this.$gun.get(route).get('gallery').set(newColonyImg)
       this.addingColonyImg = false
