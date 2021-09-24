@@ -2,13 +2,19 @@
   <div>
     <LogOut />
     <nuxt-link to="/colony-register">registrar colonia</nuxt-link>
-    <ul>
-      <li v-for="(colony, key) in colonies" :key="key">
-        <img :src="colony.img" :alt="`imagen de ${colony.name}`" />
-        <nuxt-link :to="`/check-colony/${key}`">comprobar colonia</nuxt-link>
-        <nuxt-link :to="`/colony-gallery/${key}`">ver fotos</nuxt-link>
-      </li>
-    </ul>
+    <div class="lg:container lg:mx-auto lg:max-w-2xl">
+      <ul>
+        <li v-for="(colony, key) in colonies" :key="key">
+          <ColonyCard
+            :colony-key="key"
+            :colony-name="colony.name"
+            :colony-img="colony.img"
+            :aprox-population="colony['aprox-population']"
+            :created-by-alias="colony.createdByAlias || 'desconocido'"
+          />
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
