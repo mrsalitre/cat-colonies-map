@@ -55,20 +55,6 @@
         <p class="text-xs">Población Aprox: {{ aproxPopulation }}</p>
       </div>
     </div>
-    <!-- <div class="sm:flex justify-between">
-      <nuxt-link
-        :to="`/check-colony/${colonyKey}`"
-        class="py-4 p-2 sm:w-1/3 bg-blue-500"
-      >
-        Visitar colonia
-      </nuxt-link>
-      <nuxt-link
-        :to="`/check-colony/${colonyKey}`"
-        class="py-4 p-2 sm:w-1/3 text-right bg-pink-500"
-      >
-        Comprobar colonia
-      </nuxt-link>
-    </div> -->
     <div class="py-4 px-2 sm:flex sm:justify-between">
       <div class="w-full sm:w-auto inline-flex">
         <nuxt-link
