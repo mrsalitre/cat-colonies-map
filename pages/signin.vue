@@ -26,7 +26,7 @@
                 mb-3
                 lg:text-center
               "
-              placeholder="Correo electronico"
+              placeholder="Nombre de usuario"
             />
             <p
               v-if="errors.username.length"
