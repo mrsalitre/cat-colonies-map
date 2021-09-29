@@ -134,6 +134,7 @@ export default {
       this.$refs.fileUpload.click()
     },
     addColonyImg() {
+      if (!this.colonyImg) return
       this.addingColonyImg = true
       const route = this.$route.params.id
       const img = this.colonyImg
@@ -146,6 +147,7 @@ export default {
       })
       this.$gun.get(route).get('gallery').set(newColonyImg)
       this.$gun.user().get('checked-colonies').set(newColonyImg)
+      this.$router.push('/')
       this.addingColonyImg = false
     },
   },
