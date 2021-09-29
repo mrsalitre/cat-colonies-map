@@ -1,6 +1,5 @@
 <template>
   <div>
-    <LogOut />
     <div class="lg:container lg:mx-auto lg:max-w-2xl">
       <ul>
         <li v-for="(colony, key) in colonies" :key="key">
