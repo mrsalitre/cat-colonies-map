@@ -3,6 +3,7 @@
     <div class="container mx-auto px-2 pt-20 lg:pt-18">
       <Nuxt />
     </div>
+    <BottonNav />
   </div>
 </template>
 

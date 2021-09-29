@@ -1,7 +1,5 @@
 <template>
   <div>
-    <LogOut />
-    <nuxt-link to="/colony-register">registrar colonia</nuxt-link>
     <div class="lg:container lg:mx-auto lg:max-w-2xl">
       <ul>
         <li v-for="(colony, key) in colonies" :key="key">
