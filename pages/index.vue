@@ -1,7 +1,5 @@
 <template>
   <div>
-    <LogOut />
-    <nuxt-link to="/colony-register">registrar colonia</nuxt-link>
     <div class="lg:container lg:mx-auto lg:max-w-2xl">
       <ul>
         <li v-for="(colony, key) in colonies" :key="key">
@@ -9,6 +7,7 @@
             :colony-key="key"
             :colony-name="colony.name"
             :colony-img="colony.img"
+            :colony-location="colony.location"
             :aprox-population="colony['aprox-population']"
             :created-by-alias="colony.createdByAlias || 'desconocido'"
           />
