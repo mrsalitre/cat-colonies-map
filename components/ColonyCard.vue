@@ -57,8 +57,9 @@
     </div>
     <div class="py-4 px-2 sm:flex sm:justify-between">
       <div class="w-full sm:w-auto inline-flex">
-        <nuxt-link
-          to="/"
+        <a
+          target="blank"
+          :href="`https://www.google.com/maps/search/?api=1&query=${colonyLocation.lat}%2C${colonyLocation.long}`"
           class="
             w-full
             underline
@@ -90,7 +91,7 @@
             />
           </svg>
           Visitar colonia
-        </nuxt-link>
+        </a>
       </div>
       <div class="w-full mt-3 sm:mt-0 sm:w-auto inline-flex rounded-md shadow">
         <nuxt-link
@@ -141,6 +142,7 @@ export default {
     colonyKey: String,
     colonyName: String,
     colonyImg: String,
+    colonyLocation: Object,
     aproxPopulation: Number,
     createdByAlias: String,
   },

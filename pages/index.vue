@@ -9,6 +9,7 @@
             :colony-key="key"
             :colony-name="colony.name"
             :colony-img="colony.img"
+            :colony-location="colony.location"
             :aprox-population="colony['aprox-population']"
             :created-by-alias="colony.createdByAlias || 'desconocido'"
           />
